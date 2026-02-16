@@ -1,0 +1,8 @@
+# pixi environments
+.pixi/*
+!.pixi/config.toml
+
+# data
+data/**/*
+!data/**/
+!data/**/.gitkeep
