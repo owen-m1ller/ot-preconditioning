@@ -136,3 +136,7 @@ Perform color transfer between a source and target image
 #### video-color-transfer.py
 
 Transfer the colors from a target image to each frame of a video.
+
+## Notebooks
+
+The notebooks contain walkthroughs using data installed from the data installer script. Follow them for a walkthrough of image to image color transfer and preconditioning after installing the data.
