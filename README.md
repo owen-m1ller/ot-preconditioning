@@ -96,3 +96,43 @@ to install the project dependencies.
 
 The data (images, videos, frames of videos) is stored in a Cloudflare R2 instance. To access the data, enter the scripts directory and run the `data_install.sh` script.
 
+## Getting Started
+
+A collection of utilities for video blending and color transfer are provided in the scripts directory.
+- knn-background-removal.py
+- apply_mask.py
+- video-blend.py
+- image-blend-exact.py
+- cross-fade.py
+- image-color-transfer.py
+- video-color-transfer.py
+
+The scripts are setup to work with a starting example as long as the data has properly been installed using the data_install.sh script. Each is described below:
+
+#### knn-background-removal.py
+
+Used to remove the background of a video using a KNN-based algorithm. It returns a mask, so you will need to use apply_mask.py to remove the background from the corresponding frames
+
+#### apply_mask.py
+
+Given a directory of frames and a directory of masks, apply the mask (to remove the background) from each frame.
+
+#### video-blend.py
+
+Takes two starting frames from corresponding videos and creates a blend. Change the t-values, starting frame value, and range of the for loop to customize.
+
+#### image-blend-exact.py
+
+Take two images and perform displacement interpolation between them. Returns frames of a video.
+
+#### cross-fade.py
+
+Perform a cross fade between two directories of frames.
+
+#### image-color-transfer.py
+
+Perform color transfer between a source and target image
+
+#### video-color-transfer.py
+
+Transfer the colors from a target image to each frame of a video.
