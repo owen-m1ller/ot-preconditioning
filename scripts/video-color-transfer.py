@@ -54,34 +54,32 @@ def apply_map(img, knn, lut_size=33):
     return cv2.cvtColor(pred_lab, cv2.COLOR_LAB2BGR)
 
 if __name__ == "__main__":
-    start_time = time.perf_counter()
 
-    style = sys.argv[1]   # path to reference
+    style_path = sys.argv[1]   # path to reference
     content_folder = sys.argv[2] # path to content folder
 
-    target_frame1 = sys.argv[2]
-    if sys.argv[3]:
-        n_samples = sys.argv[3]
+    if len(sys.argv) > 3:
+        n_samples = int(sys.argv[3])
     else:
         n_samples = 2000
 
-    n_frames = -1 # to account for the gitkeep file
+    n_frames = 0
     with os.scandir(content_folder) as files:
         for file in files:
-            if file.is_file():
+            if file.is_file() and not file.name.startswith('.'):
                 n_frames += 1
 
-    frame1_path = content_folder + "frame_0001.png"
-    knn = train_color_transfer(style, cv2.imread(frame1_path), n_samples)
-    
+    frame1_path = os.path.join(content_folder, "frame_0001.png")
+    style_img = cv2.imread(style_path)
+    content_img = cv2.imread(frame1_path)
+
+    knn = train_color_transfer(style_img, content_img, n_samples)
+
     for i in range(n_frames):
-        path = f"wf_frames/frame_{i + 1:04d}.png"
+        path = os.path.join(content_folder, f"frame_{i + 1:04d}.png")
         content = cv2.imread(path)
-                    
+
         out = apply_map(content, knn)
-        cv2.imwrite(f'vid-out/frame_{i+1:04d}.png', out)
+        cv2.imwrite(f'../output/frame_{i+1:04d}.png', out)
         print(f"frame {i+1} completed")
 
-    end_time = time.perf_counter()
-    elapsed = end_time - start_time
-    print(f"Execution time: {elapsed:.4f} seconds")
